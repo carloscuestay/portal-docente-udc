@@ -509,6 +509,7 @@ class ComposerStaticInite139d61200d5a71c300cec3fd268edad
         'App\\Services\\GoogleOAuth' => __DIR__ . '/../..' . '/app/Services/GoogleOAuth.php',
         'App\\Services\\QuestionBuilder' => __DIR__ . '/../..' . '/app/Services/QuestionBuilder.php',
         'App\\Services\\QuizGrader' => __DIR__ . '/../..' . '/app/Services/QuizGrader.php',
+        'App\\Services\\QuizImporter' => __DIR__ . '/../..' . '/app/Services/QuizImporter.php',
         'App\\Services\\RosterImporter' => __DIR__ . '/../..' . '/app/Services/RosterImporter.php',
         'App\\Support\\Seeded' => __DIR__ . '/../..' . '/app/Support/Seeded.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',

@@ -29,6 +29,17 @@ class QuizController extends Controller
         return redirect()->route('teacher.quizzes.show', $quiz)->with('ok', 'Evaluación creada. Agregue las preguntas.');
     }
 
+    /** Importa una evaluación desde un archivo JSON. */
+    public function import(Request $request, Subject $subject, \App\Services\QuizImporter $importer)
+    {
+        $this->ownSubject($subject);
+        $request->validate(['json' => 'required|file|max:2048']);
+        $quiz = $importer->import($subject, (string) file_get_contents($request->file('json')->getRealPath()));
+
+        return redirect()->route('teacher.quizzes.show', $quiz)
+            ->with('ok', 'Evaluación importada con '.$quiz->questions()->count().' preguntas. Revise la vista previa, configure fechas y publíquela.');
+    }
+
     public function show(Quiz $quiz)
     {
         $this->ownSubject($quiz->subject);

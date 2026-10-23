@@ -57,6 +57,7 @@ Route::middleware(['auth', 'active'])->group(function () {
         // Evaluaciones
         Route::get('asignaturas/{subject}/evaluaciones/crear', [Teacher\QuizController::class, 'create'])->name('quizzes.create');
         Route::post('asignaturas/{subject}/evaluaciones', [Teacher\QuizController::class, 'store'])->name('quizzes.store');
+        Route::post('asignaturas/{subject}/evaluaciones/importar', [Teacher\QuizController::class, 'import'])->name('quizzes.import');
         Route::get('evaluaciones/{quiz}', [Teacher\QuizController::class, 'show'])->name('quizzes.show');
         Route::get('evaluaciones/{quiz}/editar', [Teacher\QuizController::class, 'edit'])->name('quizzes.edit');
         Route::put('evaluaciones/{quiz}', [Teacher\QuizController::class, 'update'])->name('quizzes.update');

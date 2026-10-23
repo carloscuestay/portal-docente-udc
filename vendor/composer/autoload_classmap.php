@@ -35,6 +35,7 @@ return array(
     'App\\Services\\GoogleOAuth' => $baseDir . '/app/Services/GoogleOAuth.php',
     'App\\Services\\QuestionBuilder' => $baseDir . '/app/Services/QuestionBuilder.php',
     'App\\Services\\QuizGrader' => $baseDir . '/app/Services/QuizGrader.php',
+    'App\\Services\\QuizImporter' => $baseDir . '/app/Services/QuizImporter.php',
     'App\\Services\\RosterImporter' => $baseDir . '/app/Services/RosterImporter.php',
     'App\\Support\\Seeded' => $baseDir . '/app/Support/Seeded.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
