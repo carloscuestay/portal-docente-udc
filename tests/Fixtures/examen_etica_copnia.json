@@ -1,0 +1,169 @@
+{
+  "id": "ISIS-I-ETICA-COPNIA-2026-2",
+  "titulo": "Examen en línea: Ética en la Ingeniería de Sistemas y COPNIA",
+  "asignatura": "Introducción a la Ingeniería de Sistemas",
+  "programa": "Ingeniería de Sistemas",
+  "semestre": "I",
+  "periodo": "2026-2",
+  "docente": "Ing. Carlos Andrés Cuesta Yepes",
+  "complejidad": "facil",
+  "duracion_minutos": 20,
+  "intentos_permitidos": 1,
+  "escala": { "minima": 0.0, "maxima": 5.0, "aprobatoria": 3.0 },
+  "barajar_preguntas": true,
+  "barajar_opciones": true,
+  "mostrar_retroalimentacion": "al_finalizar",
+  "fuentes": [
+    "Código de Ética para el ejercicio de la Ingeniería (Ley 842 de 2003, Título IV) — COPNIA",
+    "Presentación institucional COPNIA",
+    "Taller: Ética en la Ingeniería de Sistemas — caso «El Contrato de los 80 Millones»"
+  ],
+  "preguntas": [
+    {
+      "id": "P01",
+      "tipo": "seleccion_unica",
+      "puntaje": 0.5,
+      "enunciado": "¿Qué significa la sigla COPNIA?",
+      "opciones": [
+        { "id": "a", "texto": "Consejo Profesional Nacional de Ingeniería" },
+        { "id": "b", "texto": "Colegio de Profesionales Nacionales de Informática Aplicada" },
+        { "id": "c", "texto": "Comité Permanente Nacional de Ingenieros Asociados" },
+        { "id": "d", "texto": "Consejo Público Nacional de Innovación y Tecnología" }
+      ],
+      "respuesta_correcta": "a",
+      "retroalimentacion": "COPNIA es el Consejo Profesional Nacional de Ingeniería, organismo que regula el ejercicio de la ingeniería en Colombia.",
+      "fuente": "Presentación COPNIA, diapositiva 3; Taller, sección 0"
+    },
+    {
+      "id": "P02",
+      "tipo": "seleccion_unica",
+      "puntaje": 0.5,
+      "enunciado": "¿En qué ley se encuentra el Código de Ética para el ejercicio de la ingeniería en Colombia?",
+      "opciones": [
+        { "id": "a", "texto": "Ley 100 de 1993" },
+        { "id": "b", "texto": "Ley 842 de 2003" },
+        { "id": "c", "texto": "Ley 1581 de 2012" },
+        { "id": "d", "texto": "Ley 30 de 1992" }
+      ],
+      "respuesta_correcta": "b",
+      "retroalimentacion": "El Congreso incorporó el Código de Ética Profesional en la Ley 842 de 2003.",
+      "fuente": "Código de Ética, Introducción"
+    },
+    {
+      "id": "P03",
+      "tipo": "seleccion_unica",
+      "puntaje": 0.5,
+      "enunciado": "Una de las funciones del COPNIA es:",
+      "opciones": [
+        { "id": "a", "texto": "Otorgar el título universitario de ingeniero" },
+        { "id": "b", "texto": "Contratar ingenieros para las entidades públicas" },
+        { "id": "c", "texto": "Controlar, inspeccionar y vigilar el ejercicio de la ingeniería" },
+        { "id": "d", "texto": "Diseñar los planes de estudio de las universidades" }
+      ],
+      "respuesta_correcta": "c",
+      "retroalimentacion": "El COPNIA controla, inspecciona y vigila el ejercicio de la ingeniería y actúa como tribunal ético-disciplinario.",
+      "fuente": "Presentación COPNIA, diapositiva 3"
+    },
+    {
+      "id": "P04",
+      "tipo": "seleccion_unica",
+      "puntaje": 0.5,
+      "enunciado": "¿Qué documento expedido por el COPNIA autoriza a un ingeniero para ejercer legalmente su profesión en Colombia?",
+      "opciones": [
+        { "id": "a", "texto": "El diploma de grado" },
+        { "id": "b", "texto": "La matrícula profesional" },
+        { "id": "c", "texto": "El certificado de notas" },
+        { "id": "d", "texto": "La cédula de ciudadanía" }
+      ],
+      "respuesta_correcta": "b",
+      "retroalimentacion": "Sin matrícula (tarjeta) profesional del COPNIA no se puede ejercer legalmente la ingeniería en Colombia.",
+      "fuente": "Taller, sección 0; Presentación COPNIA, diapositivas 4 y 23"
+    },
+    {
+      "id": "P05",
+      "tipo": "verdadero_falso",
+      "puntaje": 0.5,
+      "enunciado": "La experiencia profesional de un ingeniero se cuenta a partir de la fecha de expedición de su matrícula profesional, no desde la fecha de grado.",
+      "opciones": [
+        { "id": "v", "texto": "Verdadero" },
+        { "id": "f", "texto": "Falso" }
+      ],
+      "respuesta_correcta": "v",
+      "retroalimentacion": "Verdadero. Según el artículo 12 de la Ley 842 de 2003, la experiencia profesional se computa desde la expedición de la matrícula.",
+      "fuente": "Presentación COPNIA, diapositiva 7 (Art. 12)"
+    },
+    {
+      "id": "P06",
+      "tipo": "seleccion_unica",
+      "puntaje": 0.5,
+      "enunciado": "Según el Código de Ética, ¿cuál es el tiempo máximo de suspensión de la matrícula profesional?",
+      "opciones": [
+        { "id": "a", "texto": "Seis meses" },
+        { "id": "b", "texto": "Un año" },
+        { "id": "c", "texto": "Cinco años" },
+        { "id": "d", "texto": "Veinte años" }
+      ],
+      "respuesta_correcta": "c",
+      "retroalimentacion": "La suspensión de la matrícula puede ser hasta por cinco años; las faltas gravísimas llevan a la cancelación.",
+      "fuente": "Código de Ética, Introducción (sanciones)"
+    },
+    {
+      "id": "P07",
+      "tipo": "seleccion_unica",
+      "puntaje": 0.5,
+      "enunciado": "En el caso del taller, Andrés no tiene matrícula profesional y su gerente le pide firmar los documentos técnicos como «Ingeniero Responsable del Proyecto». Si Andrés firma, estaría incurriendo en:",
+      "opciones": [
+        { "id": "a", "texto": "Ejercicio ilegal de la profesión" },
+        { "id": "b", "texto": "Una conducta permitida porque ya terminó la carrera" },
+        { "id": "c", "texto": "Una conducta permitida porque su jefe se lo ordenó" },
+        { "id": "d", "texto": "Una conducta permitida si recibe un bono" }
+      ],
+      "respuesta_correcta": "a",
+      "retroalimentacion": "Practicar actos propios de la ingeniería sin cumplir los requisitos de ley (sin matrícula) es ejercicio ilegal de la profesión (Art. 13).",
+      "fuente": "Taller, caso de estudio; Presentación COPNIA, diapositiva 8 (Art. 13)"
+    },
+    {
+      "id": "P08",
+      "tipo": "seleccion_unica",
+      "puntaje": 0.5,
+      "enunciado": "En el caso del taller, ¿cuál es una salida legal para que TechSoluciones SAS pueda presentar y firmar el contrato con la Alcaldía?",
+      "opciones": [
+        { "id": "a", "texto": "Que Andrés firme con el nombre de otro ingeniero" },
+        { "id": "b", "texto": "Que la propuesta esté avalada por un ingeniero con matrícula profesional vigente" },
+        { "id": "c", "texto": "Que nadie firme los documentos técnicos" },
+        { "id": "d", "texto": "Que el gerente firme como ingeniero aunque no lo sea" }
+      ],
+      "respuesta_correcta": "b",
+      "retroalimentacion": "Las propuestas para contratos públicos de ingeniería deben estar avaladas por un ingeniero inscrito y con matrícula profesional (Art. 20).",
+      "fuente": "Presentación COPNIA, diapositiva 16 (Art. 20); Taller, pregunta 3"
+    },
+    {
+      "id": "P09",
+      "tipo": "verdadero_falso",
+      "puntaje": 0.5,
+      "enunciado": "El Código de Ética prohíbe al profesional poner su firma en planos, informes u otros documentos técnicos que no haya estudiado, controlado o ejecutado personalmente.",
+      "opciones": [
+        { "id": "v", "texto": "Verdadero" },
+        { "id": "f", "texto": "Falso" }
+      ],
+      "respuesta_correcta": "v",
+      "retroalimentacion": "Verdadero. Así lo establece el artículo 34, literal b, del Código de Ética.",
+      "fuente": "Código de Ética, Art. 34 literal b"
+    },
+    {
+      "id": "P10",
+      "tipo": "seleccion_unica",
+      "puntaje": 0.5,
+      "enunciado": "Un ingeniero de sistemas usa en su propio proyecto el software de un colega sin su autorización ni aviso. Según el Código de Ética, esta conducta:",
+      "opciones": [
+        { "id": "a", "texto": "Está permitida si el software es útil" },
+        { "id": "b", "texto": "Está prohibida, porque se debe respetar la propiedad intelectual de los demás profesionales" },
+        { "id": "c", "texto": "Está permitida si el proyecto es para una entidad pública" },
+        { "id": "d", "texto": "No está regulada por el Código de Ética" }
+      ],
+      "respuesta_correcta": "b",
+      "retroalimentacion": "Está prohibido usar sin autorización estudios, diseños o software de otros profesionales (Art. 38 a) y es deber respetar su propiedad intelectual (Art. 37 d).",
+      "fuente": "Código de Ética, Arts. 37 literal d y 38 literal a"
+    }
+  ]
+}

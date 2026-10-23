@@ -48,7 +48,7 @@
 
             @switch($q->type)
                 @case(Question::SELECCION)
-                    @php $opts = $shuffle ? Seeded::shuffle($d['options'], $seedBase.'q'.$q->id) : $d['options']; @endphp
+                    @php $opts = $shuffle && empty($d['fixed_order']) ? Seeded::shuffle($d['options'], $seedBase.'q'.$q->id) : $d['options']; @endphp
                     @foreach($opts as $k => $o)
                         <label class="option">
                             <input type="radio" name="{{ $name }}[choice]" value="{{ $o['id'] }}" @checked(($r['choice'] ?? null) === $o['id'])>

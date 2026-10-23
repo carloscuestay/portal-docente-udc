@@ -293,4 +293,24 @@ class PortalTest extends TestCase
         $this->get('/instalar/'.str_repeat('b', 30))->assertNotFound();
         $this->get('/instalar/'.str_repeat('a', 30))->assertOk()->assertSee('Instalación verificada');
     }
+
+    public function test_import_quiz_from_json(): void
+    {
+        $json = file_get_contents(base_path('tests/Fixtures/examen_etica_copnia.json'));
+        $file = UploadedFile::fake()->createWithContent('examen.json', $json);
+        $this->actingAs($this->teacher)->post(route('teacher.quizzes.import', $this->subject), ['json' => $file])->assertRedirect()->assertSessionHasNoErrors();
+        $quiz = Quiz::latest('id')->first();
+        $this->assertSame(10, $quiz->questions()->count());
+        $this->assertSame(20, $quiz->time_limit_minutes);
+        $this->assertEquals(5.0, $quiz->totalPoints());
+        $this->assertFalse($quiz->is_published);
+        $p5 = $quiz->questions()->where('position', 5)->first();
+        $this->assertSame('o1', $p5->data['correct']);
+        $this->assertTrue($p5->data['fixed_order']);
+        $this->assertSame('o3', $quiz->questions()->where('position', 3)->first()->data['correct']);
+        $this->get(route('teacher.quizzes.preview', $quiz))->assertOk()->assertSee('COPNIA');
+
+        $bad = UploadedFile::fake()->createWithContent('x.json', '{"titulo":"x"}');
+        $this->post(route('teacher.quizzes.import', $this->subject), ['json' => $bad])->assertSessionHasErrors('json');
+    }
 }

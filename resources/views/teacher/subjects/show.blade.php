@@ -28,6 +28,15 @@
     <h2 style="margin:0">Evaluaciones</h2>
     <a class="btn" href="{{ route('teacher.quizzes.create', $subject) }}">+ Nueva evaluación</a>
 </div>
+<details class="card">
+    <summary>Importar evaluación desde archivo JSON</summary>
+    <p class="small muted">Tipos admitidos: seleccion_unica, verdadero_falso, apareamiento, completar y respuesta_libre. Se crea como borrador.</p>
+    <form method="POST" action="{{ route('teacher.quizzes.import', $subject) }}" enctype="multipart/form-data" class="actions">
+        @csrf
+        <input type="file" name="json" accept=".json,application/json" required>
+        <button class="btn btn-sec" type="submit">Importar</button>
+    </form>
+</details>
 <div class="table-wrap">
 <table>
     <thead><tr><th>Evaluación</th><th>Estado</th><th>Ventana</th><th>Preguntas</th><th>Intentos</th><th></th></tr></thead>
