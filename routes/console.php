@@ -19,3 +19,17 @@ Artisan::command('portal:docente {email} {name} {--password=}', function (string
     );
     $this->info("Docente listo: {$user->email} (id {$user->id}).");
 })->purpose('Crear o actualizar la cuenta del docente');
+
+// Instalación/actualización en hosting sin SSH (se ejecuta desde un Cron Job de Hostinger):
+// aplica migraciones y, si no existe, crea la cuenta docente con TEACHER_EMAILS + TEACHER_INITIAL_PASSWORD.
+Artisan::command('portal:install', function () {
+    $this->call('migrate', ['--force' => true]);
+    $email = config('portal.teacher_emails')[0] ?? null;
+    $password = env('TEACHER_INITIAL_PASSWORD');
+    if ($email && $password && ! User::where('email', $email)->exists()) {
+        User::create(['name' => env('TEACHER_NAME', 'Docente'), 'email' => $email, 'role' => User::DOCENTE, 'password' => $password]);
+        $this->info("Cuenta docente creada: {$email}");
+    }
+    $this->call('optimize:clear');
+    $this->info('Instalación verificada.');
+})->purpose('Migrar la base de datos y crear la cuenta docente inicial');
