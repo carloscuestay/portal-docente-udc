@@ -1,0 +1,95 @@
+name: Construir rama production (Hostinger)
+
+# Cada push a main ejecuta las pruebas, instala dependencias de producción (vendor/)
+# y publica el resultado en la rama "production", que Hostinger despliega con su integración Git.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { path: src }
+
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: '8.3', extensions: pdo_pgsql, coverage: none }
+
+      - name: Pruebas
+        working-directory: src
+        run: |
+          composer install --no-interaction --prefer-dist --no-progress
+          cp .env.example .env 2>/dev/null || printf 'APP_KEY=\n' > .env
+          php artisan key:generate
+          php artisan test
+          rm -f .env
+
+      - name: Dependencias de producción
+        working-directory: src
+        run: |
+          rm -rf vendor
+          composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-progress
+
+      - name: Archivos para hosting compartido
+        working-directory: src
+        run: |
+          # Carpetas de storage y caché
+          for d in storage/app/private storage/app/public storage/framework/cache/data storage/framework/sessions \
+                   storage/framework/testing storage/framework/views storage/logs bootstrap/cache; do
+            mkdir -p "$d"; printf '*\n!.gitignore\n' > "$d/.gitignore"
+          done
+          # Redirige la raíz (public_html) a public/ y bloquea archivos ocultos (.env)
+          cat > .htaccess <<'HT'
+          <IfModule mod_rewrite.c>
+              RewriteEngine On
+              RewriteRule ^(.*)$ public/$1 [L]
+          </IfModule>
+          <FilesMatch "^\.">
+              Require all denied
+          </FilesMatch>
+          HT
+          # Front controller de Laravel
+          cat > public/.htaccess <<'HT'
+          <IfModule mod_rewrite.c>
+              <IfModule mod_negotiation.c>
+                  Options -MultiViews -Indexes
+              </IfModule>
+              RewriteEngine On
+              RewriteCond %{HTTP:Authorization} .
+              RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+              RewriteCond %{HTTP:x-xsrf-token} .
+              RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
+              RewriteCond %{REQUEST_FILENAME} !-d
+              RewriteCond %{REQUEST_URI} (.+)/$
+              RewriteRule ^ %1 [L,R=301]
+              RewriteCond %{REQUEST_FILENAME} !-d
+              RewriteCond %{REQUEST_FILENAME} !-f
+              RewriteRule ^ index.php [L]
+          </IfModule>
+          HT
+          rm -rf tests .github phpunit.xml
+          printf '.env\n/storage/*.key\n' > .gitignore
+
+      - name: Publicar en rama production
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          URL="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          if git clone --depth 1 --branch production "$URL" out 2>/dev/null; then :; else
+            mkdir out && cd out && git init -q && git checkout -q -b production && git remote add origin "$URL" && cd ..
+          fi
+          rsync -a --delete --exclude '.git' src/ out/
+          cd out
+          git add -A -f
+          git diff --cached --quiet && echo "Sin cambios" && exit 0
+          git commit -q -m "Build ${GITHUB_SHA::7}: $(git -C ../src log -1 --pretty=%s)"
+          git push origin production
