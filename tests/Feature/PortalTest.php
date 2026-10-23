@@ -61,15 +61,52 @@ class PortalTest extends TestCase
         $this->get('/login')->assertOk()->assertSee('Ingresar');
     }
 
-    public function test_teacher_password_login_and_students_cannot_use_password(): void
+    public function test_teacher_password_login(): void
     {
         $this->post('/login', ['email' => 'profe@unicartagena.edu.co', 'password' => 'secreto-12345'])->assertRedirect(route('dashboard'));
         $this->get('/inicio')->assertOk()->assertSee('Panel docente');
         auth()->logout();
+        $this->post('/login', ['email' => 'profe@unicartagena.edu.co', 'password' => 'mala'])->assertSessionHasErrors('email');
+    }
 
+    public function test_student_first_login_with_code_and_forced_change(): void
+    {
+        $s = $this->student(); // código 001234567
+        $this->post('/login', ['email' => $s->email, 'password' => 'otra'])->assertSessionHasErrors('email');
+        $this->assertGuest();
+
+        $this->post('/login', ['email' => strtoupper($s->email), 'password' => '001234567'])->assertRedirect(route('password.edit'));
+        $this->assertAuthenticatedAs($s);
+        $this->get('/inicio')->assertRedirect(route('password.edit'));
+        $this->get(route('student.subjects.show', $this->subject))->assertRedirect(route('password.edit'));
+
+        $this->put(route('password.update'), ['password' => '001234567', 'password_confirmation' => '001234567'])->assertSessionHasErrors('password');
+        $this->put(route('password.update'), ['password' => 'MiClave2026', 'password_confirmation' => 'MiClave2026'])->assertRedirect(route('dashboard'));
+        $this->get('/inicio')->assertOk();
+        auth()->logout();
+
+        // La clave inicial ya no sirve; la nueva sí
+        $this->post('/login', ['email' => $s->email, 'password' => '001234567'])->assertSessionHasErrors('email');
+        $this->post('/login', ['email' => $s->email, 'password' => 'MiClave2026'])->assertRedirect(route('dashboard'));
+        auth()->logout();
+
+        // El docente restablece la clave
+        $enr = $this->subject->enrollments()->first();
+        $this->actingAs($this->teacher)->post(route('teacher.enrollments.reset', [$this->subject, $enr]))->assertSessionHas('ok');
+        auth()->logout();
+        $this->post('/login', ['email' => $s->email, 'password' => '001234567'])->assertRedirect(route('password.edit'));
+    }
+
+    public function test_generic_password_and_unenrolled_students(): void
+    {
+        config(['portal.student_default_password' => 'UdeC2026*']);
         $s = $this->student();
-        $s->update(['password' => 'clave-estudiante-1']);
-        $this->post('/login', ['email' => $s->email, 'password' => 'clave-estudiante-1'])->assertSessionHasErrors('email');
+        $this->post('/login', ['email' => $s->email, 'password' => '001234567'])->assertSessionHasErrors('email');
+        $this->post('/login', ['email' => $s->email, 'password' => 'UdeC2026*'])->assertRedirect(route('password.edit'));
+        auth()->logout();
+
+        $outsider = User::create(['name' => 'X', 'email' => 'x@unicartagena.edu.co', 'role' => 'estudiante', 'student_code' => '999']);
+        $this->post('/login', ['email' => $outsider->email, 'password' => 'UdeC2026*'])->assertSessionHasErrors('email');
         $this->assertGuest();
     }
 

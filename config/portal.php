@@ -16,6 +16,9 @@ return [
     // Tamaño máximo de archivos de material (KB)
     'max_upload_kb' => (int) env('MAX_UPLOAD_KB', 20480),
 
+    // Clave genérica inicial de los estudiantes (vacío = su código estudiantil). Se exige cambiarla al primer ingreso.
+    'student_default_password' => env('STUDENT_DEFAULT_PASSWORD', ''),
+
     // Token temporal para ejecutar la instalación desde el navegador (hosting sin SSH).
     // Déjelo vacío después de instalar.
     'install_token' => env('INSTALL_TOKEN'),

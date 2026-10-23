@@ -3,7 +3,7 @@
 @section('content')
 <div class="breadcrumb"><a href="{{ route('dashboard') }}">Inicio</a> / <a href="{{ route('teacher.subjects.show', $subject) }}">{{ $subject->code }}</a> / Estudiantes</div>
 <h1>Estudiantes autorizados</h1>
-<p class="muted">{{ $subject->label }}. Solo los estudiantes de esta lista (con correo {{ '@'.config('portal.institutional_domain') }}) pueden ingresar y ver la asignatura.</p>
+<p class="muted">{{ $subject->label }}. Clave inicial de los estudiantes: <strong>{{ config('portal.student_default_password') ? 'la clave genérica definida en la configuración' : 'su código estudiantil' }}</strong> (al primer ingreso deben cambiarla). Solo los estudiantes de esta lista (con correo {{ '@'.config('portal.institutional_domain') }}) pueden ingresar y ver la asignatura.</p>
 
 @if($requests->isNotEmpty())
 <div class="card">
@@ -54,6 +54,8 @@
             <td class="actions">
                 <form class="inline" method="POST" action="{{ route('teacher.enrollments.toggle', [$subject, $s->pivot->id]) }}">@csrf @method('PATCH')
                     <button class="btn btn-sm btn-sec">{{ $s->pivot->is_active ? 'Deshabilitar' : 'Habilitar' }}</button></form>
+                <form class="inline" method="POST" action="{{ route('teacher.enrollments.reset', [$subject, $s->pivot->id]) }}" onsubmit="return confirm('¿Restablecer la clave de {{ addslashes($s->name) }} a la clave inicial?')">@csrf
+                    <button class="btn btn-sm btn-sec" title="Vuelve a la clave inicial">Restablecer clave</button></form>
                 <form class="inline" method="POST" action="{{ route('teacher.enrollments.destroy', [$subject, $s->pivot->id]) }}" onsubmit="return confirm('¿Retirar a {{ addslashes($s->name) }} de la lista?')">@csrf @method('DELETE')
                     <button class="btn btn-sm btn-danger">Retirar</button></form>
             </td>

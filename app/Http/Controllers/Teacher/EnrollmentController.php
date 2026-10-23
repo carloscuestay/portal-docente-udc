@@ -76,6 +76,18 @@ class EnrollmentController extends Controller
         return back()->with('ok', 'Estudiante retirado de la lista.');
     }
 
+    /** Restablece la clave del estudiante a la inicial (genérica o código); deberá cambiarla al ingresar. */
+    public function resetPassword(Subject $subject, Enrollment $enrollment)
+    {
+        $this->ownSubject($subject);
+        abort_unless($enrollment->subject_id === $subject->id, 404);
+        $user = $enrollment->user;
+        $user->forceFill(['password' => null, 'must_change_password' => true, 'remember_token' => null])->save();
+        $hint = config('portal.student_default_password') ? 'la clave genérica' : 'su código estudiantil ('.($user->student_code ?: 'sin código registrado').')';
+
+        return back()->with('ok', "Clave de {$user->name} restablecida: ahora ingresa con {$hint} y deberá cambiarla.");
+    }
+
     public function approve(AccessRequest $accessRequest)
     {
         $this->ownSubject($accessRequest->subject);

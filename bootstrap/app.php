@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'teacher' => \App\Http\Middleware\EnsureTeacher::class,
             'student' => \App\Http\Middleware\EnsureStudent::class,
             'active' => \App\Http\Middleware\EnsureActiveUser::class,
+            'password.changed' => \App\Http\Middleware\EnsurePasswordChanged::class,
         ]);
         $middleware->redirectGuestsTo('/login');
         $middleware->redirectUsersTo('/inicio');

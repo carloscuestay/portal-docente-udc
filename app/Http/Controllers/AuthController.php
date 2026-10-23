@@ -19,20 +19,45 @@ class AuthController extends Controller
         return view('auth.login', ['googleEnabled' => $this->google->configured()]);
     }
 
-    /** Ingreso con contraseña: solo para cuentas docentes (respaldo si Google no está disponible). */
+    /**
+     * Ingreso con correo y contraseña (docente y estudiantes).
+     * Estudiantes sin clave propia entran con la clave inicial (genérica o su código) y deben cambiarla.
+     */
     public function login(Request $request)
     {
         $data = $request->validate(['email' => 'required|email', 'password' => 'required|string']);
-        $user = User::where('email', Str::lower($data['email']))->first();
+        $user = User::where('email', Str::lower(trim($data['email'])))->first();
+        $fail = fn () => back()->withErrors(['email' => 'Correo o contraseña incorrectos.'])->onlyInput('email');
 
-        if (! $user || ! $user->isTeacher() || ! $user->password || ! Auth::attempt(['email' => $user->email, 'password' => $data['password']], $request->boolean('remember'))) {
-            return back()->withErrors(['email' => 'Credenciales no válidas. Los estudiantes ingresan con su cuenta institucional de Google.'])->onlyInput('email');
+        if (! $user) {
+            return $fail();
+        }
+        if (! $user->isTeacher()) {
+            if (! $user->is_active || ! $user->activeSubjects()->exists()) {
+                return back()->withErrors(['email' => 'Su correo no está habilitado en ninguna asignatura activa. Comuníquese con el docente.'])->onlyInput('email');
+            }
+            if (! $user->password) {
+                $initial = $user->initialPassword();
+                if (! $initial || ! hash_equals($initial, $data['password'])) {
+                    return $fail();
+                }
+                Auth::login($user, $request->boolean('remember'));
+                $request->session()->regenerate();
+                $user->update(['last_login_at' => now(), 'must_change_password' => true]);
+
+                return redirect()->route('password.edit');
+            }
+        } elseif (! $user->password) {
+            return $fail();
         }
 
+        if (! Auth::attempt(['email' => $user->email, 'password' => $data['password']], $request->boolean('remember'))) {
+            return $fail();
+        }
         $request->session()->regenerate();
         $user->update(['last_login_at' => now()]);
 
-        return redirect()->intended(route('dashboard'));
+        return $user->must_change_password ? redirect()->route('password.edit') : redirect()->intended(route('dashboard'));
     }
 
     public function redirectToGoogle(Request $request)
