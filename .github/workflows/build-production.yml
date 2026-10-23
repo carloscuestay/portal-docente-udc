@@ -76,7 +76,8 @@ jobs:
               RewriteRule ^ index.php [L]
           </IfModule>
           HT
-          rm -rf tests .github phpunit.xml
+          rm -rf tests .github phpunit.xml .phpunit.result.cache
+          rm -f storage/framework/views/*.php bootstrap/cache/*.php storage/logs/*.log
           printf '.env\n/storage/*.key\n' > .gitignore
 
       - name: Publicar en rama production
