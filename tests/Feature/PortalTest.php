@@ -285,4 +285,12 @@ class PortalTest extends TestCase
         $this->post(route('teacher.questions.move', [$first, 'abajo']));
         $this->assertSame(2, $first->fresh()->position);
     }
+
+    public function test_web_installer_requires_token(): void
+    {
+        $this->get('/instalar/cualquiera')->assertNotFound();
+        config(['portal.install_token' => str_repeat('a', 30)]);
+        $this->get('/instalar/'.str_repeat('b', 30))->assertNotFound();
+        $this->get('/instalar/'.str_repeat('a', 30))->assertOk()->assertSee('Instalación verificada');
+    }
 }

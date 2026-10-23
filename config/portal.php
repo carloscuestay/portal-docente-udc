@@ -16,5 +16,9 @@ return [
     // Tamaño máximo de archivos de material (KB)
     'max_upload_kb' => (int) env('MAX_UPLOAD_KB', 20480),
 
+    // Token temporal para ejecutar la instalación desde el navegador (hosting sin SSH).
+    // Déjelo vacío después de instalar.
+    'install_token' => env('INSTALL_TOKEN'),
+
     'institution' => env('INSTITUTION_NAME', 'Universidad de Cartagena'),
 ];

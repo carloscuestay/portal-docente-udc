@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => auth()->check() ? redirect()->route('dashboard') : view('welcome'))->name('home');
 
+// Instalación desde el navegador: solo funciona si INSTALL_TOKEN (>= 24 caracteres) está en el .env
+Route::get('/instalar/{token}', function (string $token) {
+    $expected = (string) config('portal.install_token');
+    abort_unless(strlen($expected) >= 24 && hash_equals($expected, $token), 404);
+    \Illuminate\Support\Facades\Artisan::call('portal:install');
+
+    return response(\Illuminate\Support\Facades\Artisan::output(), 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
+})->middleware('throttle:5,1');
+
 // Autenticación
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
