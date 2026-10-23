@@ -10,6 +10,14 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
     require $maintenance;
 }
 
+// Primera instalación: si el .env existe y APP_KEY está vacía, se genera automáticamente.
+if (is_file($env = __DIR__.'/../.env') && ! is_file(__DIR__.'/../bootstrap/cache/config.php')) {
+    $contents = (string) file_get_contents($env);
+    if (preg_match('/^APP_KEY=\s*$/m', $contents) && is_writable($env)) {
+        file_put_contents($env, preg_replace('/^APP_KEY=\s*$/m', 'APP_KEY=base64:'.base64_encode(random_bytes(32)), $contents));
+    }
+}
+
 // Register the Composer autoloader...
 require __DIR__.'/../vendor/autoload.php';
 
