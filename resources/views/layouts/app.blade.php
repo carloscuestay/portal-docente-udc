@@ -24,6 +24,7 @@
                     @if(auth()->user()->avatar_url)<img class="avatar" src="{{ auth()->user()->avatar_url }}" alt="" referrerpolicy="no-referrer">@endif
                     {{ \Illuminate\Support\Str::words(auth()->user()->name, 2, '') }}
                 </span>
+                <a href="{{ route('password.edit') }}">Clave</a>
                 <form method="POST" action="{{ route('logout') }}" class="inline">@csrf<button type="submit">Salir</button></form>
             @else
                 <a href="{{ route('login') }}">Ingresar</a>

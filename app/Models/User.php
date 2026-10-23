@@ -15,7 +15,7 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name', 'email', 'password', 'role', 'student_code', 'program',
-        'google_id', 'avatar_url', 'is_active', 'last_login_at',
+        'google_id', 'avatar_url', 'is_active', 'last_login_at', 'must_change_password',
     ];
 
     protected $hidden = ['password', 'remember_token'];
@@ -29,7 +29,16 @@ class User extends Authenticatable
             'last_login_at' => 'datetime',
             'password' => 'hashed',
             'is_active' => 'boolean',
+            'must_change_password' => 'boolean',
         ];
+    }
+
+    /** Clave inicial del estudiante: la genérica del .env o, si no hay, su código estudiantil. */
+    public function initialPassword(): ?string
+    {
+        $generic = (string) config('portal.student_default_password');
+
+        return $generic !== '' ? $generic : ($this->student_code ?: null);
     }
 
     public function isTeacher(): bool

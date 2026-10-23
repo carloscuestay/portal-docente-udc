@@ -30,6 +30,11 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::middleware(['auth', 'active'])->group(function () {
+    Route::get('/cambiar-clave', [App\Http\Controllers\PasswordController::class, 'edit'])->name('password.edit');
+    Route::put('/cambiar-clave', [App\Http\Controllers\PasswordController::class, 'update'])->middleware('throttle:10,1')->name('password.update');
+});
+
+Route::middleware(['auth', 'active', 'password.changed'])->group(function () {
     Route::get('/inicio', DashboardController::class)->name('dashboard');
     Route::get('/materiales/{material}/descargar', MaterialFileController::class)->name('materials.download');
 
@@ -44,6 +49,7 @@ Route::middleware(['auth', 'active'])->group(function () {
         Route::get('asignaturas/{subject}/estudiantes/plantilla', [Teacher\EnrollmentController::class, 'template'])->name('enrollments.template');
         Route::patch('asignaturas/{subject}/estudiantes/{enrollment}', [Teacher\EnrollmentController::class, 'toggle'])->name('enrollments.toggle');
         Route::delete('asignaturas/{subject}/estudiantes/{enrollment}', [Teacher\EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
+        Route::post('asignaturas/{subject}/estudiantes/{enrollment}/restablecer-clave', [Teacher\EnrollmentController::class, 'resetPassword'])->name('enrollments.reset');
         Route::post('solicitudes/{accessRequest}/aprobar', [Teacher\EnrollmentController::class, 'approve'])->name('requests.approve');
         Route::post('solicitudes/{accessRequest}/rechazar', [Teacher\EnrollmentController::class, 'reject'])->name('requests.reject');
 

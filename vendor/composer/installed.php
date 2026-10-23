@@ -3,7 +3,7 @@
         'name' => 'carloscuestay/portal-docente-udc',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '2b2e2bae8806393b3e76e5145ccdfb54c04c9bdf',
+        'reference' => '9fef25a268e1b05f33978cf1bf30125e431a13be',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -31,7 +31,7 @@
         'carloscuestay/portal-docente-udc' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '2b2e2bae8806393b3e76e5145ccdfb54c04c9bdf',
+            'reference' => '9fef25a268e1b05f33978cf1bf30125e431a13be',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
