@@ -79,6 +79,9 @@ jobs:
           rm -rf tests .github phpunit.xml .phpunit.result.cache
           rm -f storage/framework/views/*.php bootstrap/cache/*.php storage/logs/*.log
           printf '.env\n/storage/*.key\n' > .gitignore
+          # vendor/ ya va incluido: se renombra composer.json para que Hostinger no ejecute
+          # "composer install" (proc_open está deshabilitado en hosting compartido).
+          mv composer.json composer.source.json && rm -f composer.lock
 
       - name: Publicar en rama production
         run: |
