@@ -493,6 +493,7 @@ class ComposerStaticInite139d61200d5a71c300cec3fd268edad
         'App\\Http\\Controllers\\Teacher\\MaterialController' => __DIR__ . '/../..' . '/app/Http/Controllers/Teacher/MaterialController.php',
         'App\\Http\\Controllers\\Teacher\\QuestionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Teacher/QuestionController.php',
         'App\\Http\\Controllers\\Teacher\\QuizController' => __DIR__ . '/../..' . '/app/Http/Controllers/Teacher/QuizController.php',
+        'App\\Http\\Controllers\\Teacher\\SettingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Teacher/SettingsController.php',
         'App\\Http\\Controllers\\Teacher\\SubjectController' => __DIR__ . '/../..' . '/app/Http/Controllers/Teacher/SubjectController.php',
         'App\\Http\\Middleware\\EnsureActiveUser' => __DIR__ . '/../..' . '/app/Http/Middleware/EnsureActiveUser.php',
         'App\\Http\\Middleware\\EnsurePasswordChanged' => __DIR__ . '/../..' . '/app/Http/Middleware/EnsurePasswordChanged.php',

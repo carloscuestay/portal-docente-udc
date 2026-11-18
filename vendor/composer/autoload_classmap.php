@@ -19,6 +19,7 @@ return array(
     'App\\Http\\Controllers\\Teacher\\MaterialController' => $baseDir . '/app/Http/Controllers/Teacher/MaterialController.php',
     'App\\Http\\Controllers\\Teacher\\QuestionController' => $baseDir . '/app/Http/Controllers/Teacher/QuestionController.php',
     'App\\Http\\Controllers\\Teacher\\QuizController' => $baseDir . '/app/Http/Controllers/Teacher/QuizController.php',
+    'App\\Http\\Controllers\\Teacher\\SettingsController' => $baseDir . '/app/Http/Controllers/Teacher/SettingsController.php',
     'App\\Http\\Controllers\\Teacher\\SubjectController' => $baseDir . '/app/Http/Controllers/Teacher/SubjectController.php',
     'App\\Http\\Middleware\\EnsureActiveUser' => $baseDir . '/app/Http/Middleware/EnsureActiveUser.php',
     'App\\Http\\Middleware\\EnsurePasswordChanged' => $baseDir . '/app/Http/Middleware/EnsurePasswordChanged.php',
