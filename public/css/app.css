@@ -15,7 +15,8 @@ img{max-width:100%}
 .topbar .container{display:flex;align-items:center;gap:16px;min-height:60px;flex-wrap:wrap}
 .brand{color:#fff;text-decoration:none;font-weight:700;display:flex;flex-direction:column;line-height:1.15}
 .brand small{font-weight:400;opacity:.85;font-size:12px}
-.brand-logos{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand-logos{display:flex;align-items:center;gap:10px}
+.brand-logos a{display:flex;text-decoration:none}
 .brand-logos img{height:44px;width:auto;background:#fff;border-radius:8px;padding:4px 8px}
 .topbar nav{display:flex;gap:4px;margin-left:auto;align-items:center;flex-wrap:wrap}
 .topbar nav a,.topbar nav button{color:#fff;text-decoration:none;padding:8px 12px;border-radius:8px;background:none;border:0;font:inherit;cursor:pointer}
