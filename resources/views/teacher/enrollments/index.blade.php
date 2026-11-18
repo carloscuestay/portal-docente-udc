@@ -3,7 +3,7 @@
 @section('content')
 <div class="breadcrumb"><a href="{{ route('dashboard') }}">Inicio</a> / <a href="{{ route('teacher.subjects.show', $subject) }}">{{ $subject->code }}</a> / Estudiantes</div>
 <h1>Estudiantes autorizados</h1>
-<p class="muted">{{ $subject->label }}. Clave inicial de los estudiantes: <strong>{{ config('portal.student_default_password') ? 'la clave genérica definida en la configuración' : 'su código estudiantil' }}</strong> (al primer ingreso deben cambiarla). Solo los estudiantes de esta lista (con correo {{ '@'.config('portal.institutional_domain') }}) pueden ingresar y ver la asignatura.</p>
+<p class="muted">{{ $subject->label }}. Clave inicial de los estudiantes: <strong>{{ config('portal.student_default_password') ? 'la clave genérica definida en la configuración' : 'su código estudiantil' }}</strong> (al primer ingreso deben cambiarla). Solo los estudiantes de esta lista @if(config('portal.institutional_domain'))(con correo {{ '@'.config('portal.institutional_domain') }})@endif pueden ingresar y ver la asignatura.</p>
 
 @if($requests->isNotEmpty())
 <div class="card">
@@ -30,7 +30,7 @@
         <label for="file">Archivo CSV</label>
         <input id="file" type="file" name="file" accept=".csv,.txt">
         <label for="list">…o pegue la lista</label>
-        <textarea id="list" name="list" placeholder="0012345678;Ana María Pérez Gómez;aperezg{{ '@'.config('portal.institutional_domain') }}">{{ old('list') }}</textarea>
+        <textarea id="list" name="list" placeholder="0012345678;Ana María Pérez Gómez;{{ 'aperezg@'.(config('portal.institutional_domain') ?: 'correo.com') }}">{{ old('list') }}</textarea>
         <p><button class="btn" type="submit">Procesar lista</button></p>
     </form>
 </details>
