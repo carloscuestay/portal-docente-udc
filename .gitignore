@@ -1,2 +1,5 @@
 .env
 /storage/*.key
+/public/tiendatrampa/
+/public/digifrance/
+/public/digifrancemulti/
