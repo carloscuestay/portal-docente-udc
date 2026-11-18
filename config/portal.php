@@ -28,6 +28,8 @@ return [
     // Logos del encabezado (rutas dentro de public/ o URL completas); vacío = solo texto
     'logo' => env('PORTAL_LOGO'),
     'logo_secondary' => env('PORTAL_LOGO_SECONDARY'),
+    // Enlace del logo principal (p. ej. el sitio de la empresa); vacío = inicio del portal
+    'logo_url' => env('PORTAL_LOGO_URL'),
 
     // Texto de presentación de la portada
     'tagline' => env('PORTAL_TAGLINE', 'Espacio de apoyo a la docencia para los programas de Ingeniería de Sistemas y Administración Industrial'),
