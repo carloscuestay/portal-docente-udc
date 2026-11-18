@@ -39,6 +39,7 @@ return array(
     'App\\Services\\QuizGrader' => $baseDir . '/app/Services/QuizGrader.php',
     'App\\Services\\QuizImporter' => $baseDir . '/app/Services/QuizImporter.php',
     'App\\Services\\RosterImporter' => $baseDir . '/app/Services/RosterImporter.php',
+    'App\\Support\\PortalSettings' => $baseDir . '/app/Support/PortalSettings.php',
     'App\\Support\\Seeded' => $baseDir . '/app/Support/Seeded.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Brick\\Math\\BigDecimal' => $vendorDir . '/brick/math/src/BigDecimal.php',
