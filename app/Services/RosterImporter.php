@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 /**
  * Importa la lista de estudiantes (CSV o texto pegado) y los matricula en la asignatura.
  * Formato por línea: codigo;nombre completo;correo  (separador ; , o tabulador; orden flexible).
- * Solo se aceptan correos del dominio institucional configurado.
+ * Solo se aceptan correos del dominio institucional configurado (si INSTITUTIONAL_DOMAIN está vacío, cualquier correo).
  */
 class RosterImporter
 {
@@ -19,9 +19,12 @@ class RosterImporter
         return Str::lower(config('portal.institutional_domain'));
     }
 
+    /** Sin dominio configurado (INSTITUTIONAL_DOMAIN vacío) se acepta cualquier correo. */
     public function isInstitutional(string $email): bool
     {
-        return Str::endsWith(Str::lower(trim($email)), '@'.$this->domain());
+        $domain = $this->domain();
+
+        return $domain === '' || Str::endsWith(Str::lower(trim($email)), '@'.$domain);
     }
 
     /** @return array{created:int, enrolled:int, already:int, errors:array<int,string>} */
@@ -62,7 +65,7 @@ class RosterImporter
                 continue;
             }
             if (! filter_var($email, FILTER_VALIDATE_EMAIL) || ! $this->isInstitutional($email)) {
-                $result['errors'][] = 'Línea '.($n + 1).": {$email} no es un correo @".$this->domain().'.';
+                $result['errors'][] = 'Línea '.($n + 1).": {$email} ".($this->domain() === '' ? 'no es un correo válido.' : 'no es un correo @'.$this->domain().'.');
                 continue;
             }
 
