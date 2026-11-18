@@ -4,7 +4,7 @@
 <div class="login-box">
     <div class="card">
         <h1>Ingresar</h1>
-        <p class="muted small">Estudiantes: use su correo institucional <strong>{{ '@'.config('portal.institutional_domain') }}</strong>.
+        <p class="muted small">Estudiantes: use {!! config('portal.institutional_domain') ? 'su correo institucional <strong>@'.e(config('portal.institutional_domain')).'</strong>' : 'el correo que registró el docente' !!}.
             La primera vez ingrese con la <strong>clave inicial</strong> que le dio el docente
             @unless(config('portal.student_default_password'))(su <strong>código estudiantil</strong>)@endunless
             y el portal le pedirá crear su propia contraseña.</p>
@@ -12,7 +12,7 @@
         <form method="POST" action="{{ route('login.password') }}">
             @csrf
             <label for="email">Correo</label>
-            <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" placeholder="usuario{{ '@'.config('portal.institutional_domain') }}">
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" placeholder="{{ 'usuario@'.(config('portal.institutional_domain') ?: 'correo.com') }}">
             <label for="password">Contraseña</label>
             <input id="password" type="password" name="password" required autocomplete="current-password">
             <label class="check"><input type="checkbox" name="remember" value="1"> Mantener la sesión</label>
