@@ -5,20 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Inicio') · {{ config('app.name') }}</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=2">
 </head>
 <body>
 <header class="topbar">
     <div class="container">
+        @if(config('portal.logo') || config('portal.logo_secondary'))
+        <a class="brand-logos" href="{{ auth()->check() ? route('dashboard') : route('home') }}" aria-label="{{ config('app.name') }}">
+            @if(config('portal.logo'))<img src="{{ \Illuminate\Support\Str::startsWith(config('portal.logo'), 'http') ? config('portal.logo') : asset(config('portal.logo')) }}" alt="{{ config('portal.institution') }}">@endif
+            @if(config('portal.logo_secondary'))<img src="{{ \Illuminate\Support\Str::startsWith(config('portal.logo_secondary'), 'http') ? config('portal.logo_secondary') : asset(config('portal.logo_secondary')) }}" alt="{{ config('app.name') }}">@endif
+        </a>
+        @else
         <a class="brand" href="{{ auth()->check() ? route('dashboard') : route('home') }}">
             {{ config('app.name') }}
             <small>{{ config('portal.institution') }}</small>
         </a>
+        @endif
         <nav>
             @auth
                 <a href="{{ route('dashboard') }}">Inicio</a>
                 @if(auth()->user()->isTeacher())
                     <a href="{{ route('teacher.subjects.create') }}">+ Asignatura</a>
+                    <a href="{{ route('teacher.settings.edit') }}">Configuración</a>
                 @endif
                 <span class="small" style="padding:0 8px">
                     @if(auth()->user()->avatar_url)<img class="avatar" src="{{ auth()->user()->avatar_url }}" alt="" referrerpolicy="no-referrer">@endif
