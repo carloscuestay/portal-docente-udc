@@ -25,6 +25,10 @@ return [
 
     'institution' => env('INSTITUTION_NAME', 'Universidad de Cartagena'),
 
+    // Logos del encabezado (rutas dentro de public/ o URL completas); vacío = solo texto
+    'logo' => env('PORTAL_LOGO'),
+    'logo_secondary' => env('PORTAL_LOGO_SECONDARY'),
+
     // Texto de presentación de la portada
     'tagline' => env('PORTAL_TAGLINE', 'Espacio de apoyo a la docencia para los programas de Ingeniería de Sistemas y Administración Industrial'),
 ];
