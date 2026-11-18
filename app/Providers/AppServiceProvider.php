@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Ajustes guardados desde la interfaz del docente (registro abierto o por dominio institucional)
+        \App\Support\PortalSettings::apply();
     }
 }
