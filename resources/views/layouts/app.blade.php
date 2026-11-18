@@ -11,10 +11,10 @@
 <header class="topbar">
     <div class="container">
         @if(config('portal.logo') || config('portal.logo_secondary'))
-        <a class="brand-logos" href="{{ auth()->check() ? route('dashboard') : route('home') }}" aria-label="{{ config('app.name') }}">
-            @if(config('portal.logo'))<img src="{{ \Illuminate\Support\Str::startsWith(config('portal.logo'), 'http') ? config('portal.logo') : asset(config('portal.logo')) }}" alt="{{ config('portal.institution') }}">@endif
-            @if(config('portal.logo_secondary'))<img src="{{ \Illuminate\Support\Str::startsWith(config('portal.logo_secondary'), 'http') ? config('portal.logo_secondary') : asset(config('portal.logo_secondary')) }}" alt="{{ config('app.name') }}">@endif
-        </a>
+        <div class="brand-logos">
+            @if(config('portal.logo'))<a href="{{ config('portal.logo_url') ?: (auth()->check() ? route('dashboard') : route('home')) }}" title="{{ config('portal.institution') }}"><img src="{{ \Illuminate\Support\Str::startsWith(config('portal.logo'), 'http') ? config('portal.logo') : asset(config('portal.logo')) }}" alt="{{ config('portal.institution') }}"></a>@endif
+            @if(config('portal.logo_secondary'))<a href="{{ auth()->check() ? route('dashboard') : route('home') }}" title="{{ config('app.name') }}"><img src="{{ \Illuminate\Support\Str::startsWith(config('portal.logo_secondary'), 'http') ? config('portal.logo_secondary') : asset(config('portal.logo_secondary')) }}" alt="{{ config('app.name') }}"></a>@endif
+        </div>
         @else
         <a class="brand" href="{{ auth()->check() ? route('dashboard') : route('home') }}">
             {{ config('app.name') }}
