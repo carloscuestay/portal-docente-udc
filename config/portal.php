@@ -24,4 +24,7 @@ return [
     'install_token' => env('INSTALL_TOKEN'),
 
     'institution' => env('INSTITUTION_NAME', 'Universidad de Cartagena'),
+
+    // Texto de presentación de la portada
+    'tagline' => env('PORTAL_TAGLINE', 'Espacio de apoyo a la docencia para los programas de Ingeniería de Sistemas y Administración Industrial'),
 ];
