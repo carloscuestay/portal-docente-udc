@@ -49,7 +49,7 @@ class EnrollmentController extends Controller
     public function template(Subject $subject)
     {
         $this->ownSubject($subject);
-        $domain = $this->importer->domain();
+        $domain = $this->importer->domain() ?: 'correo.com';
         $csv = "\xEF\xBB\xBFcodigo;nombre;correo\n0012345678;Ana María Pérez Gómez;aperezg@{$domain}\n0012345679;Luis Carlos Díaz;ldiazc@{$domain}\n";
 
         return response($csv, 200, [
