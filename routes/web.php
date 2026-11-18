@@ -43,6 +43,10 @@ Route::middleware(['auth', 'active', 'password.changed'])->group(function () {
         Route::resource('asignaturas', Teacher\SubjectController::class)
             ->parameters(['asignaturas' => 'subject'])->names('subjects');
 
+        // Configuración del portal (registro de estudiantes)
+        Route::get('configuracion', [Teacher\SettingsController::class, 'edit'])->name('settings.edit');
+        Route::put('configuracion', [Teacher\SettingsController::class, 'update'])->name('settings.update');
+
         // Listas de estudiantes
         Route::get('asignaturas/{subject}/estudiantes', [Teacher\EnrollmentController::class, 'index'])->name('enrollments.index');
         Route::post('asignaturas/{subject}/estudiantes/importar', [Teacher\EnrollmentController::class, 'import'])->name('enrollments.import');
